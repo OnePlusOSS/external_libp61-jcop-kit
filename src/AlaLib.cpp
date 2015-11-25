@@ -89,7 +89,7 @@ tJBL_STATUS ALA_Init(IChannel_t *channel)
 ** Returns:         SUCCESS if ok.
 **
 *******************************************************************************/
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
 tJBL_STATUS ALA_Start(const char *name, const char *dest, UINT8 *pdata, UINT16 len, UINT8 *respSW)
 #else
 tJBL_STATUS ALA_Start(const char *name, UINT8 *pdata, UINT16 len)
@@ -101,7 +101,7 @@ tJBL_STATUS ALA_Start(const char *name, UINT8 *pdata, UINT16 len)
     if(name != NULL)
     {
         ALOGE("%s: name is %s", fn, name);
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
         ALOGE("%s: Dest is %s", fn, dest);
         status = Perform_ALA(name, dest, pdata, len, respSW);
 #else
@@ -160,7 +160,7 @@ bool ALA_DeInit()
     /*Ala_inUse = false;*/
     return stat;
 }
-#if(ALA_VERSION_2 != TRUE)
+#if(NXP_LDR_SVC_VER_2 != TRUE)
 /*******************************************************************************
 **
 ** Function:        ALA_GetlistofApplets

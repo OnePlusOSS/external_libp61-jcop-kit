@@ -37,7 +37,7 @@ typedef struct Ala_TranscieveInfo
     UINT8 sTemp_recvbuf[1024];
 }Ala_TranscieveInfo_t;
 
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
 typedef struct Ala_ImageInfo
 {
     FILE                 *fp;
@@ -77,7 +77,7 @@ typedef struct Ala_lib_Context
 }Ala_Dwnld_Context_t,*pAla_Dwnld_Context_t;
 
 static UINT8 OpenChannel[] = {0x00, 0x70, 0x00, 0x00, 0x01};
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
 static UINT8 GetData[] = {0x80, 0xCA, 0x00, 0x46, 0x00};
 #ifndef NXP_LS_AID
 static UINT8 SelectAla[] = {0x00, 0xA4, 0x04, 0x00, 0x0D, 0xA0, 0x00, 0x00, 0x03, 0x96, 0x41, 0x4C, 0x41, 0x01, 0x43, 0x4F, 0x52, 0x01};
@@ -89,7 +89,7 @@ static UINT8 SelectAla[] = {0x00, 0xA4, 0x04, 0x00, 0x0F, 0xA0, 0x00, 0x00, 0x03
 static UINT8 SelectAla[] = {0x00, 0xA4, 0x04, 0x00, 0x0D, 0xA0, 0x00, 0x00, 0x03, 0x96, 0x41, 0x4C, 0x41, 0x01, 0x43, 0x4F, 0x52, 0x01};
 #endif
 /*ALA2*/
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
 #define NOOFAIDS     0x03
 #define LENOFAIDS    0x16
 #ifndef NXP_LS_AID
@@ -190,7 +190,7 @@ BOOLEAN initialize (IChannel_t *channel);
 *******************************************************************************/
 void finalize ();
 
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
 tJBL_STATUS Perform_ALA(const char *path,const char *dest, const UINT8 *pdata, UINT16 len, UINT8 *respSW);
 #else
 tJBL_STATUS Perform_ALA(const char *path, const UINT8 *pdata, UINT16 len);
@@ -209,7 +209,7 @@ ALA_StoreData(Ala_ImageInfo_t* pContext, tJBL_STATUS status, Ala_TranscieveInfo_
 static tJBL_STATUS
 ALA_loadapplet(Ala_ImageInfo_t *Os_info, tJBL_STATUS status, Ala_TranscieveInfo_t *pTranscv_Info);
 
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
 static tJBL_STATUS
 ALA_update_seq_handler(tJBL_STATUS (*seq_handler[])(Ala_ImageInfo_t* pContext, tJBL_STATUS status, Ala_TranscieveInfo_t* pInfo), const char *name, const char *dest);
 
@@ -248,7 +248,7 @@ static tJBL_STATUS
 JsblCerId_seq_handler(tJBL_STATUS (*seq_handler[])(Ala_ImageInfo_t* pContext, tJBL_STATUS status, Ala_TranscieveInfo_t* pInfo));
 
 tJBL_STATUS ALA_SendtoEse(Ala_ImageInfo_t *Os_info, tJBL_STATUS status, Ala_TranscieveInfo_t *pTranscv_Info);
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
 tJBL_STATUS GetLsStatus_seq_handler(tJBL_STATUS (*seq_handler[])(Ala_ImageInfo_t*
         pContext, tJBL_STATUS status, Ala_TranscieveInfo_t* pInfo));
 tJBL_STATUS ALA_SendtoAla(Ala_ImageInfo_t *Os_info, tJBL_STATUS status, Ala_TranscieveInfo_t *pTranscv_Info, Ls_TagType tType);
@@ -256,12 +256,12 @@ tJBL_STATUS ALA_SendtoAla(Ala_ImageInfo_t *Os_info, tJBL_STATUS status, Ala_Tran
 tJBL_STATUS ALA_SendtoAla(Ala_ImageInfo_t *Os_info, tJBL_STATUS status, Ala_TranscieveInfo_t *pTranscv_Info);
 #endif
 tJBL_STATUS ALA_CloseChannel(Ala_ImageInfo_t *Os_info, tJBL_STATUS status, Ala_TranscieveInfo_t *pTranscv_Info);
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
 tJBL_STATUS ALA_ProcessResp(Ala_ImageInfo_t *image_info, INT32 recvlen, Ala_TranscieveInfo_t *trans_info, Ls_TagType tType);
 #else
 tJBL_STATUS ALA_ProcessResp(Ala_ImageInfo_t *image_info, INT32 recvlen, Ala_TranscieveInfo_t *trans_info);
 #endif
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
 tJBL_STATUS ALA_Check_KeyIdentifier(Ala_ImageInfo_t *Os_info, tJBL_STATUS status,
    Ala_TranscieveInfo_t *pTranscv_Info, UINT8* temp_buf, tJBL_STATUS flag,
    INT32 wNewLen);

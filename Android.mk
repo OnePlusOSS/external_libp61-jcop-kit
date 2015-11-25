@@ -8,7 +8,7 @@ endef
 
 
 LOCAL_PATH:= $(call my-dir)
-D_CFLAGS += -DALA_VERSION_2=TRUE
+D_CFLAGS += -DNXP_LDR_SVC_VER_2=TRUE
 ######################################
 # Build shared library system/lib/libp61-jcop-kit.so for stack code.
 

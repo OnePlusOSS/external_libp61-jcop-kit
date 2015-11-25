@@ -45,7 +45,7 @@ unsigned char ALA_Init(IChannel *channel);
 ** Returns:         SUCCESS if ok.
 **
 *******************************************************************************/
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
 unsigned char ALA_Start(const char *name, const char *dest, UINT8 *pdata, UINT16 len, UINT8 *respSW);
 #else
 unsigned char ALA_Start(const char *name, UINT8 *pdata, UINT16 len);
@@ -60,7 +60,7 @@ unsigned char ALA_Start(const char *name, UINT8 *pdata, UINT16 len);
 **
 *******************************************************************************/
 bool ALA_DeInit();
-#if(ALA_VERSION_2 == TRUE)
+#if(NXP_LDR_SVC_VER_2 == TRUE)
 unsigned char ALA_lsGetVersion(UINT8 *pVersion);
 unsigned char ALA_lsGetStatus(UINT8* pStatus);
 unsigned char ALA_lsGetAppletStatus(UINT8* pStatus);
