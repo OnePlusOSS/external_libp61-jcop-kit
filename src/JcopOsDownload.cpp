@@ -282,7 +282,6 @@ tJBL_STATUS JcopOsDwnld::GetInfo(JcopOs_ImageInfo_t* pImageInfo, tJBL_STATUS sta
                                  "/data/nfc/JcopOs_Update2.apdu",
                                  "/data/nfc/JcopOs_Update3.apdu"};
 
-    memcpy(pImageInfo->fls_path, (char *)path[pImageInfo->index], strlen(path[pImageInfo->index]));
     bool stat = false;
     IChannel_t *mchannel = gpJcopOs_Dwnld_Context->channel;
     INT32 recvBufferActualSize = 0;
@@ -297,6 +296,8 @@ tJBL_STATUS JcopOsDwnld::GetInfo(JcopOs_ImageInfo_t* pImageInfo, tJBL_STATUS sta
     }
     else
     {
+        memcpy(pImageInfo->fls_path, (char *)path[pImageInfo->index], strlen(path[pImageInfo->index]));
+
         memset(pTranscv_Info->sSendData, 0, 1024);
         pTranscv_Info->timeout = gTransceiveTimeout;
         pTranscv_Info->sSendlength = (UINT32)sizeof(GetInfo_APDU);
@@ -350,15 +351,16 @@ tJBL_STATUS JcopOsDwnld::GetInfo(JcopOs_ImageInfo_t* pImageInfo, tJBL_STATUS sta
         }
         else
         {
-        status = STATUS_FAILED;
-        ALOGD("%s; Invalid response for GetInfo", fn);
+            status = STATUS_FAILED;
+            ALOGD("%s; Invalid response for GetInfo", fn);
         }
+    }
+
     if (status == STATUS_FAILED)
-        {
-            mchannel->doeSE_Reset();
-            usleep(2000*1000);
-            ALOGD("%s; status failed, doing reset...", fn);
-        }
+    {
+        ALOGD("%s; status failed, doing reset...", fn);
+        mchannel->doeSE_Reset();
+        usleep(2000*1000);
     }
     ALOGD("%s: exit; status = 0x%X", fn, status);
     return status;
@@ -491,6 +493,7 @@ tJBL_STATUS JcopOsDwnld::load_JcopOS_image(JcopOs_ImageInfo_t *Os_info, tJBL_STA
         }
         else
         {
+            status = STATUS_FAILED;
             ALOGE("%s: Invalid response", fn);
             goto exit;
         }
@@ -503,15 +506,9 @@ tJBL_STATUS JcopOsDwnld::load_JcopOS_image(JcopOs_ImageInfo_t *Os_info, tJBL_STA
         SetJcopOsState(Os_info, Os_info->cur_state);
     }
 
+exit:
     mchannel->doeSE_Reset();
     usleep(2000*1000);
-    ALOGE("%s: End of Load os image", fn);
-    wResult = fclose(Os_info->fp);
-
-    return status;
-
-exit:
-    status = (status == 0x01)?0x01: STATUS_FAILED;
     ALOGE("%s close fp and exit; status= 0x%X", fn,status);
     wResult = fclose(Os_info->fp);
     return status;

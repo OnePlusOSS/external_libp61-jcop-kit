@@ -24,7 +24,7 @@
 pAla_Dwnld_Context_t gpAla_Dwnld_Context=NULL;
 extern INT32 gTransceiveTimeout;
 #ifdef JCOP3_WR
-UINT8 Cmd_Buffer[64*1024]; //Workaround for Bug in JCOP
+UINT8 Cmd_Buffer[64*1024];
 static INT32 cmd_count = 0;
 bool islastcmdLoad;
 bool SendBack_cmds = false;
@@ -126,7 +126,7 @@ BOOLEAN initialize (IChannel_t* channel)
 
     while(!(feof(fAID_MEM)))
     {
-        /*Found one bug here the length is not incremented*/
+        /*the length is not incremented*/
         wStatus = FSCANF_BYTE(fAID_MEM,"%2x",&ArrayOfAIDs[2][aidLen++]);
         if(wStatus == 0)
         {
@@ -525,7 +525,7 @@ tJBL_STATUS ALA_OpenChannel(Ala_ImageInfo_t *Os_info, tJBL_STATUS status,
     IChannel_t *mchannel = gpAla_Dwnld_Context->mchannel;
     Os_info->channel_cnt = 0x00;
     ALOGD("%s: enter", fn);
-    if(Os_info == NULL &&
+    if(Os_info == NULL ||
        pTranscv_Info == NULL)
     {
         ALOGD("%s: Invalid parameter", fn);
@@ -598,7 +598,7 @@ tJBL_STATUS ALA_SelectAla(Ala_ImageInfo_t *Os_info, tJBL_STATUS status, Ala_Tran
 #endif
     ALOGD("%s: enter", fn);
 
-    if(Os_info == NULL &&
+    if(Os_info == NULL ||
        pTranscv_Info == NULL)
     {
         ALOGD("%s: Invalid parameter", fn);
@@ -718,7 +718,7 @@ tJBL_STATUS ALA_StoreData(Ala_ImageInfo_t *Os_info, tJBL_STATUS status, Ala_Tran
     INT32 xx=0, len = 0;
     IChannel_t *mchannel = gpAla_Dwnld_Context->mchannel;
     ALOGD("%s: enter", fn);
-    if(Os_info == NULL &&
+    if(Os_info == NULL ||
        pTranscv_Info == NULL)
     {
         ALOGD("%s: Invalid parameter", fn);
@@ -1333,7 +1333,7 @@ tJBL_STATUS ALA_ReadScript(Ala_ImageInfo_t *Os_info, UINT8 *read_buf)
             ALOGE("%s: Exit Read Script failed in 7F21 ", fn);
             return STATUS_FAILED;
         }
-        /*Bug fix for Read_Script from wCount*2 to wCount*1 */
+        /*Read_Script from wCount*2 to wCount*1 */
         Os_info->bytes_read = Os_info->bytes_read + (wCount*2);
         lenOff = 2;
     }
@@ -1456,8 +1456,7 @@ tJBL_STATUS ALA_SendtoEse(Ala_ImageInfo_t *Os_info, tJBL_STATUS status, Ala_Tran
     ALOGD("%s: enter", fn);
 #ifdef JCOP3_WR
     /*
-     * Bufferize_load_cmds function is implemented as a workaround
-     * for a bug in JCOP
+     * Bufferize_load_cmds function is implemented in JCOP
      * */
     status = Bufferize_load_cmds(Os_info, status, pTranscv_Info);
     if(status != STATUS_FAILED)
@@ -1623,7 +1622,7 @@ tJBL_STATUS ALA_CloseChannel(Ala_ImageInfo_t *Os_info, tJBL_STATUS status, Ala_T
     UINT8 cnt = 0;
     ALOGD("%s: enter",fn);
 
-    if(Os_info == NULL &&
+    if(Os_info == NULL ||
        pTranscv_Info == NULL)
     {
         ALOGE("Invalid parameter");
@@ -2954,7 +2953,7 @@ tJBL_STATUS ALA_getAppletLsStatus(Ala_ImageInfo_t *Os_info, tJBL_STATUS status, 
 
     ALOGD("%s: enter", fn);
 
-    if(Os_info == NULL &&
+    if(Os_info == NULL ||
        pTranscv_Info == NULL)
     {
         ALOGD("%s: Invalid parameter", fn);
